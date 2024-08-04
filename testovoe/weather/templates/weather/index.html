@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода</title>
+</head>
+
+<body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Погода</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+        </nav>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-3 offset-1">
+                <h1>Ваш город</h1>
+                <form action="" method="post">
+                    {%csrf_token%}
+                    <label for="city">Город</label>
+                    {{form.name}}
+                    <input type="submit" name="send" value="Добавить" 
+                    class="btn btn-outline-dark mt-3">
+                </form>
+            </div>
+            <div class="col-7 offset-1">
+                <h1>Информация</h1>
+
+                {% for info in all_info%}
+                <div class="alert alert-dark">
+                    <b>Город: </b> {{info.city}} <br>
+                    <table class="table table-lg">
+                        <thead>
+                            <th scope="col">Дата</th>
+                            <th scope="col">Минимум</th>
+                            <th scope="col">Максимум</th>
+                        </thead>
+                        <tbody>
+                            {%for val in info.zip%}
+                        <tr>
+                            <td>{{val.0}}</td>
+                            <td>{{val.1}} °C</td>
+                            <td>{{val.2}} °C</td>
+                        </tr>
+                                
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                            
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
